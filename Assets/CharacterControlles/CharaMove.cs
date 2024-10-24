@@ -13,6 +13,10 @@ public class CharaMove : MonoBehaviour
     public float rotSpeed = 700f;
 
 
+    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–¢é€£ã®å¤‰æ•°
+    private Animator Moves;
+    private int moveX;
+
     public Transform _self;
     public Transform _target;
 
@@ -20,49 +24,52 @@ public class CharaMove : MonoBehaviour
     void Start()
     {
       charaCon = gameObject.GetComponent<CharacterController>();
-
+      Moves = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         groundedPlayer = charaCon.isGrounded;
+        moveX = 0;
 
-        //d—Íˆ—
+        //ï¿½dï¿½Íï¿½ï¿½ï¿½
         PlayerVelocity.y += gravity * Time.deltaTime;
         if (groundedPlayer & PlayerVelocity.y < 0)
         {
             PlayerVelocity.y = 0f;
         }
-        //d—Íˆ—
+        //ï¿½dï¿½Íï¿½ï¿½ï¿½
 
 
-        //ˆÚ“®ˆ—
+        //ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½
+        if(Input.GetAxis("Horizontal") != 0)
+        {
         ForwardBack MoveX = GetComponent<ForwardBack>();
-        MoveX.forwardback(charaCon, playerSpeed);
-        //ˆÚ“®ˆ—
+        MoveX.forwardback(charaCon, playerSpeed,Moves);
+        }
+        //ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½
 
-
-        //ƒWƒƒƒ“ƒvˆ—
+        //ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½
         if (Input.GetKey(KeyCode.Space) && groundedPlayer)
         {
             PlayerVelocity.y += jumpHeight * -0.25f * gravity;
         }
-        //ƒWƒƒƒ“ƒvˆ—
+        //ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½
 
 
-        //U‚èŒü‚«ˆ—
+        //ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (groundedPlayer)
         {
             LookAtTarget MoveZ = GetComponent<LookAtTarget>();
             MoveZ.lookattarget(_self, _target);
         }
-        //U‚èŒü‚«ˆ—
+        //ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
-        //ÅIˆÚ“®ˆ—
+        //ï¿½ÅIï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½
         charaCon.Move(PlayerVelocity * Time.deltaTime);
-        //ÅIˆÚ“®ˆ—
+        //ï¿½ÅIï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
     }
