@@ -15,6 +15,7 @@ public class CharaMove : MonoBehaviour
 
     //アニメーション関連の変数
     private Animator Moves;
+    private Animator punches;
     private int moveX;
 
     public Transform _self;
@@ -25,14 +26,14 @@ public class CharaMove : MonoBehaviour
     {
       charaCon = gameObject.GetComponent<CharacterController>();
       Moves = GetComponent<Animator>();
+      punches = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         groundedPlayer = charaCon.isGrounded;
-        moveX = 0;
-
+        Moves.SetInteger("moveX",0);
         //�d�͏���
         PlayerVelocity.y += gravity * Time.deltaTime;
         if (groundedPlayer & PlayerVelocity.y < 0)
@@ -48,6 +49,7 @@ public class CharaMove : MonoBehaviour
         ForwardBack MoveX = GetComponent<ForwardBack>();
         MoveX.forwardback(charaCon, playerSpeed,Moves);
         }
+        
         //�ړ�����
 
         //�W�����v����
